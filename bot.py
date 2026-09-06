@@ -3,17 +3,24 @@ import re
 import asyncio
 import sqlite3
 from typing import List
+from dotenv import load_dotenv
+from telethon import TelegramClient
+
+load_dotenv()
+
+
 
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 
-from dotenv import load_dotenv
 
+api_id=24078627
+api_hash="4bfeafd8075403696854929d52fc5b7b"
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from telethon import TelegramClient
+
 from telethon.errors import FloodWaitError
 from telethon.tl.functions.channels import (
     GetParticipantRequest,
@@ -29,6 +36,66 @@ from telethon.tl.types import (
     UserStatusLastWeek,
     UserStatusLastMonth,
 )
+
+
+
+
+
+
+client = TelegramClient(
+    "session_name",
+    api_id,
+    api_hash
+)
+
+
+
+load_dotenv()
+
+
+
+
+api_id = 24078627
+api_hash = "4bfeafd8075403696854929d52fc5b7b"
+
+client = TelegramClient("my_user_session", api_id, api_hash)
+
+client.start(
+    phone="+79173641366",
+    password=lambda: input("Введите пароль 2FA: ")
+)
+
+print("Аккаунт подключён")
+client.run_until_disconnected()
+
+
+
+
+
+
+import os
+from pathlib import Path
+from telethon import TelegramClient
+
+
+
+session_dir = Path(__file__).parent / "sessions"
+session_dir.mkdir(exist_ok=True)
+
+
+client = TelegramClient(
+
+
+ proxy={
+        "proxy_type": "socks5",
+        "addr": "127.0.0.1",
+        "port": 9150 }
+)
+
+client.start()
+print("Подключение выполнено")
+client.run_until_disconnected()
+
 
 
 load_dotenv()
@@ -320,6 +387,23 @@ async def check_is_admin(chat, user_id: int) -> bool:
                 channel=chat,
                 participant=user_id,
             )
+        )
+        client = TelegramClient(
+            "session",
+            api_id,
+            api_hash
+        )
+        from telethon import TelegramClient
+        from telethon.network.connection import ConnectionTcpFull
+
+        client = TelegramClient(
+            "session",
+            api_id,
+            api_hash,
+            connection=ConnectionTcpFull,
+            use_ipv6=False,
+            timeout=30,
+            connection_retries=5
         )
 
         return isinstance(
@@ -1315,6 +1399,9 @@ async def try_command(message: Message):
         "\n\n".join(make_result_line(row) for row in rows),
         disable_web_page_preview=True,
     )
+print(type(API_ID), API_ID)
+print(repr(API_HASH), len(API_HASH))
+print(repr(PHONE))
 
 
 @dp.message()
@@ -1340,6 +1427,14 @@ async def links_command(message: Message):
         f"Добавлено в базу исключений: {added}\n"
         f"Дубликатов: {duplicates}"
     )
+telegram_client = TelegramClient(
+    "telegram_profile",
+    API_ID,
+    API_HASH,
+    connection_retries=10,
+    retry_delay=5,
+    timeout=30,
+)
 
 
 async def main():
