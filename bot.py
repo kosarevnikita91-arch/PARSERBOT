@@ -1,3 +1,4 @@
+import aiogram
 import os
 import re
 import asyncio
