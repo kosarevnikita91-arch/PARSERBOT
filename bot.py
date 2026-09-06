@@ -1,4 +1,4 @@
-import aiogram
+
 import os
 import re
 import asyncio
@@ -9,7 +9,7 @@ from telethon import TelegramClient
 
 load_dotenv()
 
-
+import aiogram
 
 from collections import Counter
 from datetime import datetime, timedelta, timezone
